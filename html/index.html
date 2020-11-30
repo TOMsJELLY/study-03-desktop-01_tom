@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>eelテスト</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>eelテスト</h1>
+        <div id="alart"></div>
+        <form id="form">
+            <label>保存先</label><br>
+            <input id="text1" type="text" placeholder="source">.csv<br>
+            <label>検索ワード</label><br>
+            <input id="text" type="text">
+            <input id="search" type="button" value="検索">
+        </form>
+
+        <script type="text/javascript" src="/eel.js"></script>
+
+        <p>ログ</p>
+        <textarea class="textarea" id="textarea" name="log"></textarea>
+
+        <script>
+            alart = document.getElementById('alart');
+            dir = document.getElementById('text1');
+            content = document.getElementById('text');
+            search = document.getElementById('search');
+
+            search.addEventListener('click', () => {
+                // console.log("aa")
+                if (content.value == "" || dir.value == ""){
+                    alart.style.color = "red";
+                    alart.innerHTML = "【エラー】保存先、検索ワードもしくはその両方が空です！";
+                }else{
+                    eel.expose(run);
+                    async function run() {
+                        let val = await eel.search_junction(content.value, dir.value)();
+                        document.getElementById('textarea').innerHTML += val;
+                        console.log(val + " from Python")
+                    }
+                    run();
+                }
+            })
+
+            eel.expose(view_log_js)
+            function view_log_js(text){
+            }
+        </script>
+    </body>
+</html>
