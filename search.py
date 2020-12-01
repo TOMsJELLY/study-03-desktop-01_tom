@@ -17,9 +17,6 @@ def kimetsu_search(search_word, save_location):
 
     else:
         source.append(word)
-        with open("character_source.csv", "wb") as char:
-            for e in source:
-                char.write((e + "\n").encode('utf-8'))
 
         # CSV書き込み
         df = pd.DataFrame(source, columns=["name"])
